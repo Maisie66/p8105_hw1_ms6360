@@ -1,22 +1,81 @@
 ---
 title: "ms6360 - Homework 1"
+author: "Maisie Sun"
+date: 2022-09-24
 output: github_document
 ---
 # Problem 1
 
-```{r}
+```{r, message = FALSE}
+library(tidyverse)
 data("penguins", package = "palmerpenguins")
 ```
 
-Here's a **code chunk** that samples from 
-a _normal distribution_:
+Here are some descriptions of the `penguins` dataset:
 
-```{r}
-samp = rnorm(100)
-length(samp)
+* There are 344 observations of 8 variables (`r nrow(penguins)` rows and `r ncol(penguins)` columns).
+
+* Each row depicts a penguin subject and there are 344 penguins studied.
+
+* The 8 variables that were measured are: species, island, bill length in mm, bill depth in mm, flipper length in mm, body mass in g, sex, and year of data collection.
+
+* The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm=TRUE), 2)`.
+
+
+Now, onto the scatterplot
+```{r, warning = FALSE}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+ggsave("penguins_scatter_plot.pdf", heigh = 4, width = 6)
 ```
 
-# Section 2
+# Problem 2
 
-I can take the mean of the sample, too!
-The mean is `r mean(samp)`.
+Creating a dataframe to include:
+
+* a random sample of size 10 from a standard Normal distribution
+
+* a logical vector indicating whether elements of the sample are greater than 0
+
+* a character vector of length 10
+
+* a factor vector of length 10, with 3 different factor “levels”
+
+```{r}
+my_df = 
+  tibble(
+    random = rnorm(n = 10),
+    vec_logical = random > 0,
+    vec_char = c("Hello", "my", "name", "is", "Maisie", "and", "here", "are", "few", "words"),
+    vec_factor = factor(c("high", "middle", "low", "low", "high", "middle", "high", "low", "middle", "high"))
+    )
+
+mean(pull(my_df, random))
+mean(pull(my_df, vec_logical))
+mean(pull(my_df, vec_char)) 
+mean(pull(my_df, vec_factor))
+
+```
+
+Running the code, numeric and logical vectors work and the means were calculated. Character and factor vectors did not work. For the warning message for character and factor vectors is "argument is not numeric or logical: returning NA".
+
+When explicitly converting a logical, character, and factor variable to numeric, it looks like this:
+```{r, results = "hide", warning = FALSE}
+my_df = 
+  tibble(
+    random = rnorm(n = 10),
+    vec_logical = random > 0,
+    vec_char = c("Hello", "my", "name", "is", "Maisie", "and", "here", "are", "few", "words"),
+    vec_factor = factor(c("high", "middle", "low", "low", "high", "middle", "high", "low", "middle", "high")),
+    logical_num = as.numeric(pull(my_df, vec_logical)),
+    char_num = as.numeric(pull(my_df, vec_char)),
+    factor_num = as.numeric(pull(my_df, vec_factor))
+    )
+my_df
+
+mean(pull(my_df, random))
+mean(pull(my_df, logical_num))
+mean(pull(my_df, char_num)) 
+mean(pull(my_df, factor_num))
+```
+
+When running the code, no warning message was displayed. Logical, and factor vectors that were converted into numeric vector had a mean calculated. For the character vector, after being converted into numeric, the values were all "NA", which is appropriate because there was no way to assign values to words. 
