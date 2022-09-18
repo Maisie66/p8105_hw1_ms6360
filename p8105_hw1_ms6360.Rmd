@@ -2,10 +2,11 @@
 title: "ms6360 - Homework 1"
 output: github_document
 ---
+# Problem 1
 
-I'm an R Markdown document! 
-
-# Section 1
+```{r}
+data("penguins", package = "palmerpenguins")
+```
 
 Here's a **code chunk** that samples from 
 a _normal distribution_:
