@@ -71,4 +71,4 @@ After turning the logical, character, and factor variable into numeric, only the
 
 This explains why the character variable cannot have the mean calculated because it cannot be converted into a numeric variable.
 
-The factor variable can now have its mean being calculated, being `mean(as.numeric(pull(my_df, vec_factor)))`, in contrast to the first mean calculation which was impossible. This shows that R is unable to recognize an ordinal variable once it is converted into a numeric variable. This is something to be careful when dealing with ordinal variables.
+The factor variable can now have its mean being calculated, being `r mean(as.numeric(pull(my_df, vec_factor)))`, in contrast to the first mean calculation which was impossible. This shows that R is unable to recognize an ordinal variable once it is converted into a numeric variable. This is something to be careful when dealing with ordinal variables.
