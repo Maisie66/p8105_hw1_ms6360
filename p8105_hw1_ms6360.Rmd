@@ -6,7 +6,7 @@ output: github_document
 ---
 # Problem 1
 
-```{r, message = FALSE}
+```{r for library and dataset, message = FALSE}
 library(tidyverse)
 data("penguins", package = "palmerpenguins")
 ```
@@ -23,7 +23,7 @@ Here are some descriptions of the `penguins` dataset:
 
 
 Now, onto the scatterplot
-```{r, warning = FALSE}
+```{r for scatterplot, warning = FALSE}
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 ggsave("penguins_scatter_plot.pdf", heigh = 4, width = 6)
 ```
@@ -40,7 +40,7 @@ Creating a dataframe to include:
 
 * a factor vector of length 10, with 3 different factor “levels”
 
-```{r}
+```{r for dataframe}
 my_df = 
   tibble(
     random = rnorm(n = 10),
@@ -57,11 +57,13 @@ mean(pull(my_df, vec_factor))
 
 ```
 
-Running the code, numeric and logical vectors work and the means were calculated. Character and factor vectors did not work and the mean was not calculated. For the warning message for character and factor vectors is "argument is not numeric or logical: returning NA".
+Running the code, numeric and logical vectors work and the means were calculated. For the logical vector, when calculating the mean of a Boolean operator, R will assign TRUE as 1 and FALSE as 0. Therefore, the mean can be calculated. 
+
+Character and factor vectors did not work and the mean was not calculated. For the warning message for character and factor vectors is "argument is not numeric or logical: returning NA".
 
 When explicitly converting a logical, character, and factor variable to numeric, it looks like this:
 
-```{r, results = "hide", warning = FALSE}
+```{r for numeric conversion, results = "hide", warning = FALSE}
 as.numeric(pull(my_df, vec_logical))
 as.numeric(pull(my_df, vec_char))
 as.numeric(pull(my_df, vec_factor))
